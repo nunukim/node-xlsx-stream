@@ -1,6 +1,6 @@
-# xlsx ファイルをストリームで変換する。
+# Convert stream of Array to a xlsx file.
 #
-# * 使い方
+# * Usage
 #
 # out = fs.createWriteStream('out.xlsx')
 # stream = xlsxStream()
@@ -19,11 +19,10 @@ duplex = require 'duplexer'
 
 templates = require './templates'
 utils = require "./utils"
-
 sheetStream = require "./sheet"
 
 module.exports = xlsxStream = (opts = {})->
-  # zip にアーカイブする。
+  # archiving into a zip file using archiver (internally using node's zlib built-in module)
   zip = archiver.create('zip', opts)
   defaultRepeater = through()
   proxy = duplex(defaultRepeater, zip)
@@ -53,13 +52,15 @@ module.exports = xlsxStream = (opts = {})->
     sheets.push sheet
     sheetStream(zip, sheet, opts)
 
-  # 入力ストリームが終わったら、後処理。
+  # finalize the xlsx file
   proxy.finalize = ->
-    # 静的なファイル
+    # static files
     for name, buffer of templates.statics
       zip.append buffer, {name, store: opts.store}
+    for name, func of templates.semiStatics
+      zip.append func(opts), {name, store: opts.store}
 
-    # シート数に応じて変化するもの
+    # files modified by number of sheets
     for name, obj of templates.sheet_related
       buffer =  obj.header
       buffer += obj.sheet(sheet) for sheet in sheets

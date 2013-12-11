@@ -39,6 +39,10 @@ module.exports =
            ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
           <Override PartName="/xl/sharedStrings.xml" 
            ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/>
+          <Override PartName="/docProps/core.xml" 
+           ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
+          <Override PartName="/docProps/app.xml" 
+           ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
       """
       sheet: (sheet)-> """
           <Override PartName="/#{esc sheet.path}" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
@@ -91,9 +95,9 @@ module.exports =
     "_rels/.rels": xml """
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-        <Relationship Id="rId1" 
-         Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" 
-         Target="xl/workbook.xml"/>
+        <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>
+        <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>
+        <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
       </Relationships>
     """
 
@@ -154,3 +158,30 @@ module.exports =
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="0" uniqueCount="0"/>
     """
+
+    "docProps/app.xml": xml """
+      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+      <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
+        <Application>node-xlsx-stream</Application>
+        <DocSecurity>0</DocSecurity>
+        <ScaleCrop>false</ScaleCrop>
+        <Company>Microsoft Corporation</Company>
+        <LinksUpToDate>false</LinksUpToDate>
+        <SharedDoc>false</SharedDoc>
+        <HyperlinksChanged>false</HyperlinksChanged>
+        <AppVersion>#{require('../package.json').version}</AppVersion>
+      </Properties>
+      """
+
+  semiStatics:
+    "docProps/core.xml": (opts)->
+      today = new Date().toISOString()
+      """
+      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+      <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dc:creator>node-xlsx-stream</dc:creator>
+        <cp:lastModifiedBy>node-xlsx-stream</cp:lastModifiedBy>
+        <dcterms:created xsi:type="dcterms:W3CDTF">#{today}</dcterms:created>
+        <dcterms:modified xsi:type="dcterms:W3CDTF">#{today}</dcterms:modified>
+      </cp:coreProperties>
+      """
