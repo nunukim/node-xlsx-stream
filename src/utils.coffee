@@ -24,7 +24,7 @@ module.exports =
     if _.isNumber(val) and _.isFinite(val)
       "<c r='#{ref}'><v>#{val}</v></c>"
     else if _.isDate(val)
-      "<c r='#{ref}' t='d'><v>#{val.toISOString()}</v></c>"
+      "<c r='#{ref}' t='d' s='2'><v>#{val.toISOString()}</v></c>"
     else if _.isBoolean(val)
       "<c r='#{ref}' t='b'><v>#{if val then '1' else '0'}</v></c>"
     else

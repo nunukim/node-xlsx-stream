@@ -8,10 +8,7 @@ module.exports =
   worksheet:
     header: xml """
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-      <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" 
-       xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" 
-       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-       mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
+      <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
         <sheetViews>
           <sheetView workbookViewId="0"/>
         </sheetViews>
@@ -29,20 +26,13 @@ module.exports =
       header: xml """
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
-          <Default Extension="rels" 
-           ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
-          <Default Extension="xml" 
-           ContentType="application/xml"/>
-          <Override PartName="/xl/workbook.xml" 
-           ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
-          <Override PartName="/xl/styles.xml" 
-           ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
-          <Override PartName="/xl/sharedStrings.xml" 
-           ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/>
-          <Override PartName="/docProps/core.xml" 
-           ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
-          <Override PartName="/docProps/app.xml" 
-           ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
+          <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+          <Default Extension="xml" ContentType="application/xml"/>
+          <Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
+          <Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
+          <Override PartName="/xl/sharedStrings.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/>
+          <Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
+          <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
       """
       sheet: (sheet)-> """
           <Override PartName="/#{esc sheet.path}" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
@@ -60,20 +50,15 @@ module.exports =
           <Relationship Id="rSheet#{esc sheet.index}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="#{esc sheet.rel}"/>
           """
       footer: xml """
-          <Relationship Id="rId2" 
-           Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings" 
-           Target="sharedStrings.xml"/>
-          <Relationship Id="rId3" 
-           Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" 
-           Target="styles.xml"/>
+          <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings" Target="sharedStrings.xml"/>
+          <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
         </Relationships>
       """
 
     "xl/workbook.xml":
       header: xml """
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-        <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" 
-         xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+        <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
           <fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="9303"/>
           <workbookPr defaultThemeVersion="124226"/>
           <bookViews>
@@ -103,11 +88,7 @@ module.exports =
 
     "xl/styles.xml": xml """
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-      <styleSheet 
-       xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" 
-       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-       mc:Ignorable="x14ac" 
-       xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
+      <styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
         <fonts count="1" x14ac:knownFonts="1">
           <font>
             <sz val="11"/>
@@ -137,8 +118,10 @@ module.exports =
         <cellStyleXfs count="1">
           <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
         </cellStyleXfs>
-        <cellXfs count="1">
-          <xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" />
+        <cellXfs count="3">
+          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="0"/>
+          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="0"/>
+          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="14" applyNumberFormat="1"/>
         </cellXfs>
         <cellStyles count="1">
           <cellStyle name="Normal" xfId="0" builtinId="0"/>
@@ -146,8 +129,7 @@ module.exports =
         <dxfs count="0"/>
         <tableStyles count="0" defaultTableStyle="TableStyleMedium2" defaultPivotStyle="PivotStyleLight16"/>
         <extLst>
-          <ext uri="{EB79DEF2-80B8-43e5-95BD-54CBDDF9020C}" 
-           xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main">
+          <ext uri="{EB79DEF2-80B8-43e5-95BD-54CBDDF9020C}" xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main">
             <x14:slicerStyles defaultSlicerStyle="SlicerStyleLight1"/>
           </ext>
         </extLst>
