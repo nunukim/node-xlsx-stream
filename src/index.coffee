@@ -15,60 +15,59 @@
 through = require 'through'
 archiver = require 'archiver'
 _ = require 'lodash'
-async = require 'async'
 duplex = require 'duplexer'
 
 templates = require './templates'
 utils = require "./utils"
 
-module.exports = xlsxStream = (opts = {})->
-  # 列番号の26進表記(A, B, .., Z, AA, AB, ..)
-  # 一度計算したらキャッシュしておく。
-  colChar = _.memoize utils.colChar
+sheetStream = require "./sheet"
 
+module.exports = xlsxStream = (opts = {})->
   # zip にアーカイブする。
   zip = archiver.create('zip', opts)
+  defaultRepeater = through()
+  proxy = duplex(defaultRepeater, zip)
 
-  # prevent loosing data before listening 'data' event in v0.8
+  # prevent loosing data before listening 'data' event in node v0.8
   zip.pause()
   process.nextTick -> zip.resume()
 
-  # 静的なファイル
-  for name, buffer of templates.statics
-    zip.append buffer, {name, store: opts.store}
+  defaultSheet = null
+  sheets = []
 
-  # 行ごとに変換してxl/worksheets/sheet1.xml に追加
-  onData = (row)->
-    unless @rowIdx?
-      @queue templates.worksheet_header # sheet1.xml のヘッダ部分
-      @rowIdx = 1
+  # writing data without sheet() results in creating a default worksheet named 'Sheet1'
+  defaultRepeater.once 'data', (data)->
+    defaultSheet = proxy.sheet('Sheet1')
+    defaultSheet.write(data)
+    defaultRepeater.pipe(defaultSheet)
+    defaultRepeater.on 'end', proxy.finalize
 
-    buf = "<row r='#{@rowIdx}'>"
-    if opts.columns?
-      buf += utils.buildCell("#{colChar(i)}#{@rowIdx}", row[col]) for col, i in opts.columns
-    else
-      buf += utils.buildCell("#{colChar(i)}#{@rowIdx}", val) for val, i in row
-    buf += '</row>'
-    @queue new Buffer(buf)
-    @rowIdx++
+  # Append a new worksheet to the workbook
+  proxy.sheet = (name)->
+    index = sheets.length+1
+    sheet =
+      index: index
+      name: name || "Sheet#{index}"
+      rel: "worksheets/sheet#{index}.xml"
+      path: "xl/worksheets/sheet#{index}.xml"
+    sheets.push sheet
+    sheetStream(zip, sheet, opts)
 
-  # sheet1.xml のフッタ部分を追加
-  onEnd = ->
-    @queue templates.worksheet_header unless @rowIdx
-    @queue templates.worksheet_footer
-    @queue null
+  # 入力ストリームが終わったら、後処理。
+  proxy.finalize = ->
+    # 静的なファイル
+    for name, buffer of templates.statics
+      zip.append buffer, {name, store: opts.store}
 
-  instream = through(onData, onEnd)
+    # シート数に応じて変化するもの
+    for name, obj of templates.sheet_related
+      buffer =  obj.header
+      buffer += obj.sheet(sheet) for sheet in sheets
+      buffer += obj.footer
+      zip.append buffer, {name, store: opts.store}
 
-  # 変換された入力データは順次zip にアーカイブする。
-  zip.append instream, {name: 'xl/worksheets/sheet1.xml', store: opts.store}
-
-  zip.finalize (e, bytes)->
-    return proxy.emit 'error', e if e?
-    proxy.emit 'finalize', bytes
-
-  # 入力 はinstream へ、
-  # zip は出力 へ。
-  proxy = duplex(instream, zip)
+    zip.finalize (e, bytes)->
+      return proxy.emit 'error', e if e?
+      proxy.emit 'finalize', bytes
 
   return proxy
