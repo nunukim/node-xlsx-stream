@@ -60,6 +60,7 @@ vows.describe('xlsx-stream').addBatch(
         x.on 'end', @callback
         x.on 'finalize', -> console.log "FINALIZE:", arguments
         x.pipe fs.createWriteStream(tmp('multi.xlsx'))
+
         sheet1 = x.sheet("1st sheet")
         sheet1.write ["This", "is", "my", "first", "worksheet"]
         sheet1.end()

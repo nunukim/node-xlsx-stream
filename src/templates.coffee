@@ -53,7 +53,7 @@ module.exports =
         <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
       """
       sheet: (sheet)-> """
-          <Relationship Id="rId#{esc sheet.index}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="#{esc sheet.rel}"/>
+          <Relationship Id="rSheet#{esc sheet.index}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="#{esc sheet.rel}"/>
           """
       footer: xml """
           <Relationship Id="rId2" 
@@ -78,7 +78,7 @@ module.exports =
           <sheets>
       """
       sheet: (sheet)-> xml """
-            <sheet name="#{esc sheet.name}" sheetId="#{esc sheet.index}" r:id="rId#{esc sheet.index}"/>
+            <sheet name="#{esc sheet.name}" sheetId="#{esc sheet.index}" r:id="rSheet#{esc sheet.index}"/>
       """
       footer: xml """
           </sheets>
