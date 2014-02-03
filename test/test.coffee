@@ -42,6 +42,7 @@ vows.describe('xlsx-stream').addBatch(
         x.write ["Float", 1.5, 0.3, 0.123456789e+23]
         x.write ["Boolean", true, false]
         x.write ["Date", new Date]
+        x.write ["Custom Duration 36 hours", {v: 1.5, t: 'n', s: 3}]
         x.end()
         return
       "Parse xlsx":
