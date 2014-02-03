@@ -118,10 +118,11 @@ module.exports =
         <cellStyleXfs count="1">
           <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
         </cellStyleXfs>
-        <cellXfs count="3">
+        <cellXfs count="4">
           <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="0"/>
           <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="0"/>
           <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="14" applyNumberFormat="1"/>
+          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="46" applyNumberFormat="1"/>
         </cellXfs>
         <cellStyles count="1">
           <cellStyle name="Normal" xfId="0" builtinId="0"/>

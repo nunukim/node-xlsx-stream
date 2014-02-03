@@ -21,7 +21,9 @@ module.exports =
 
   buildCell: (ref, val)->
     return '' unless val?
-    if _.isNumber(val) and _.isFinite(val)
+    if val.v
+      "<c r='#{ref}' t='#{val.t}' s='#{val.s}'><v>#{val.v}</v></c>"
+    else if _.isNumber(val) and _.isFinite(val)
       "<c r='#{ref}'><v>#{val}</v></c>"
     else if _.isDate(val)
       "<c r='#{ref}' t='d' s='2'><v>#{val.toISOString()}</v></c>"
