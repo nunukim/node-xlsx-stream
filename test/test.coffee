@@ -43,6 +43,7 @@ vows.describe('xlsx-stream').addBatch(
         x.write ["Boolean", true, false]
         x.write ["Date", new Date]
         x.write ["Custom Duration 36 hours", {v: 1.5, t: 'n', s: 3}]
+        x.write ["Formula", {v: "ok", f: "CONCATENATE(A1,B2)"}]
         x.end()
         return
       "Parse xlsx":

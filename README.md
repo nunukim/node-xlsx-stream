@@ -24,6 +24,7 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
         x.write [1,2,3]
         x.write ["Date", new Date]
         x.write ["Duration", { v: 1.5, t: 'n', s:3 }]
+        x.write ["Formula", {v: "ok", f: "CONCATENATE(A1,B2)"}]
 
         x.end()
 
@@ -46,4 +47,4 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
 
 * Help Wanted
 
-        Formulas and Custom Formats
+        Comments and Custom Number Formats

@@ -21,13 +21,33 @@ module.exports =
 
   buildCell: (ref, val)->
     return '' unless val?
-    if val.v
-      "<c r='#{ref}' t='#{val.t}' s='#{val.s}'><v>#{val.v}</v></c>"
-    else if _.isNumber(val) and _.isFinite(val)
-      "<c r='#{ref}'><v>#{val}</v></c>"
-    else if _.isDate(val)
-      "<c r='#{ref}' t='d' s='2'><v>#{val.toISOString()}</v></c>"
-    else if _.isBoolean(val)
-      "<c r='#{ref}' t='b'><v>#{if val then '1' else '0'}</v></c>"
+    if typeof val == 'object' and !_.isDate(val)
+      v = val.v
+      t = val.t
+      s = val.s
+      f = val.f
     else
-      "<c r='#{ref}' t='inlineStr'><is><t>#{escapeXML(val)}</t></is></c>"
+      v = val
+
+    if _.isNumber(v) and _.isFinite(v)
+      v = '<v>' + v + '</v>'
+    else if _.isDate(v)
+      t = 'd'
+      s = '2' unless s?
+      v = '<v>' + v.toISOString() + '</v>'
+    else if _.isBoolean(v)
+      t = 'b'
+      v = '<v>' + (v ? '1' : '0') + '</v>'
+    else if v
+      v = '<is><t>' + escapeXML(v) + '</t></is>'
+      t = 'inlineStr'
+
+    return '' unless v or f
+    r = '<c r="' + ref + '"'
+    r += ' t="' + t + '"' if t
+    r += ' s="' + s + '"' if s
+    r += '>'
+    r += '<f>' + f + '</f>' if f
+    r += v if v
+    r += '</c>'
+    return r
