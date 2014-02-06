@@ -33,6 +33,22 @@ module.exports = xlsxStream = (opts = {})->
 
   defaultSheet = null
   sheets = []
+  styles =
+    numFmts: [
+      numFmtId: "0",
+      formatCode: ""
+    ]
+    cellStyleXfs: [
+      { numFmtId: "0", formatCode: "" }
+      { numFmtId: "1", formatCode: "0" }
+      { numFmtId: "14", formatCode: "m/d/yy" }
+    ]
+    customFormatsCount: 0
+    formatCodesToStyleIndex: {}
+  index = 0
+  for item in styles.cellStyleXfs
+    styles.formatCodesToStyleIndex[item.formatCode || ""] = index
+    index++
 
   # writing data without sheet() results in creating a default worksheet named 'Sheet1'
   defaultRepeater.once 'data', (data)->
@@ -49,11 +65,15 @@ module.exports = xlsxStream = (opts = {})->
       name: name || "Sheet#{index}"
       rel: "worksheets/sheet#{index}.xml"
       path: "xl/worksheets/sheet#{index}.xml"
+      styles: styles
     sheets.push sheet
     sheetStream(zip, sheet, opts)
 
   # finalize the xlsx file
   proxy.finalize = ->
+    # styles
+    zip.append templates.styles(styles), { name: "xl/styles.xml", store: opts.store }
+
     # static files
     for name, buffer of templates.statics
       zip.append buffer, {name, store: opts.store}

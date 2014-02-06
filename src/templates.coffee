@@ -75,20 +75,29 @@ module.exports =
         </workbook>
       """
 
-  # Static files
-  statics:
-    "_rels/.rels": xml """
-      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-        <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-        <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>
-        <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>
-        <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
-      </Relationships>
-    """
+  # Styles file
+  styles: (styl)->
+    numFmtItems = ""
+    for item in styl.numFmts
+      numFmtItems += "  <numFmt numFmtId=\"#{item.numFmtId}\" formatCode=\"#{esc(item.formatCode)}\" />\n"
+    numFmts = if numFmtItems then """
+      <numFmts count="#{styl.numFmts.length}">
+        #{numFmtItems}</numFmts>
+    """ else ""
 
-    "xl/styles.xml": xml """
+    cellXfItems = ""
+    for item in styl.cellStyleXfs
+      cellXfItems += "  <xf xfId=\"0\" fontId=\"0\" fillId=\"0\" borderId=\"0\" numFmtId=\"#{item.numFmtId}\" applyNumberFormat=\"1\"/>\n"
+    cellXfs = if cellXfItems then """
+      <cellXfs count="#{Object.keys(styl.cellStyleXfs).length}">
+        #{cellXfItems}
+      </cellXfs>
+    """ else ""
+
+    xml """
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
+        #{numFmts}
         <fonts count="1" x14ac:knownFonts="1">
           <font>
             <sz val="11"/>
@@ -115,15 +124,7 @@ module.exports =
             <diagonal/>
           </border>
         </borders>
-        <cellStyleXfs count="1">
-          <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
-        </cellStyleXfs>
-        <cellXfs count="4">
-          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="0"/>
-          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="0"/>
-          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="14" applyNumberFormat="1"/>
-          <xf xfId="0" fontId="0" fillId="0" borderId="0" numFmtId="46" applyNumberFormat="1"/>
-        </cellXfs>
+        #{cellXfs}
         <cellStyles count="1">
           <cellStyle name="Normal" xfId="0" builtinId="0"/>
         </cellStyles>
@@ -135,6 +136,17 @@ module.exports =
           </ext>
         </extLst>
       </styleSheet>
+    """
+
+  # Static files
+  statics:
+    "_rels/.rels": xml """
+      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+        <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>
+        <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>
+        <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
+      </Relationships>
     """
 
     "xl/sharedStrings.xml": xml """
