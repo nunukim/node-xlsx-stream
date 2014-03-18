@@ -15,9 +15,9 @@ module.exports = sheetStream = (zip, sheet, opts={})->
     nRow++
     buf = "<row r='#{nRow}'>"
     if opts.columns?
-      buf += utils.buildCell("#{colChar(i)}#{nRow}", row[col]) for col, i in opts.columns
+      buf += utils.buildCell("#{colChar(i)}#{nRow}", row[col], sheet.styles) for col, i in opts.columns
     else
-      buf += utils.buildCell("#{colChar(i)}#{nRow}", val) for val, i in row
+      buf += utils.buildCell("#{colChar(i)}#{nRow}", val, sheet.styles) for val, i in row
     buf += '</row>'
     @queue buf
   onEnd = ->

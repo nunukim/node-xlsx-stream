@@ -7,6 +7,10 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
 
         npm install xlsx-stream
 
+* Features
+
+        Multiple sheets, String, Number, Date, Duration, Cell Formats
+
 * Usage
 
         # coffee-script
@@ -18,7 +22,12 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
         
         x.write ["foo", "bar", "buz"]
         x.write [1,2,3]
-        
+        x.write ["Date", new Date]
+        x.write ["Duration", { v: 1.5, t: 'n', nf: '[h]:mm:ss' }]
+        x.write ["Formula", {v: "ok", f: "CONCATENATE(A1,B2)"}]
+        x.write ["Percentage Built-in format #9", { v: 0.5, nf: '0.00%' }]
+        x.write ["Percentage Custom format", { v: 0.5, nf: '00.000%' }]
+
         x.end()
 
 * Multiple sheets support
@@ -38,3 +47,6 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
 
         x.finalize()
 
+* Help Wanted
+
+        Comments

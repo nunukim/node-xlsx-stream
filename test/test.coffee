@@ -42,6 +42,12 @@ vows.describe('xlsx-stream').addBatch(
         x.write ["Float", 1.5, 0.3, 0.123456789e+23]
         x.write ["Boolean", true, false]
         x.write ["Date", new Date]
+        x.write ["2 Decimals Built-in format #2", { v: 1.5, nf: '0.00' }]
+        x.write ["Time Built-in format #18", { v: 1.5, nf: 'h:mm AM/PM' }]
+        x.write ["Percentage Built-in format #9", { v: 0.5, nf: '0.00%' }]
+        x.write ["Percentage Custom format", { v: 0.5, nf: '00.000%' }]
+        x.write ["Duration 36 hours format #46", {v: 1.5, t: 'n', nf: '[h]:mm:ss' }]
+        x.write ["Formula", {v: "ok", f: "CONCATENATE(A1,B2)"}]
         x.end()
         return
       "Parse xlsx":
