@@ -13,7 +13,7 @@ module.exports = sheetStream = (zip, sheet, opts={})->
   nRow = 0
   onData = (row)->
     nRow++
-    buf = "<row r='#{nRow}'>"
+    buf = "<row r=\"#{nRow}\">"
     if opts.columns?
       buf += utils.buildCell("#{colChar(i)}#{nRow}", row[col], sheet.styles) for col, i in opts.columns
     else
