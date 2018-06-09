@@ -1,24 +1,31 @@
 {
   "name": "node-xlsx-stream",
   "description": "Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.",
-  "version": "0.1.5",
-  "homepage": "https://github.com/nunukim/node-xlsx-stream",
+  "version": "0.1.6",
+  "homepage": "https://github.com/ecmel/node-xlsx-stream",
   "author": {
     "name": "Ryota Suzuki",
     "email": "suzuki@galileoscope.com",
     "url": "http://galileoscope.com/"
   },
+  "maintainers": [
+    {
+      "name": "Ecmel Ercan",
+      "email": "ecmel.ercan@gmail.com",
+      "url": "https://github.com/ecmel"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/nunukim/node-xlsx-stream.git"
+    "url": "git://github.com/ecmel/node-xlsx-stream.git"
   },
   "bugs": {
-    "url": "https://github.com/nunukim/node-xlsx-stream/issues"
+    "url": "https://github.com/ecmel/node-xlsx-stream/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/nunukim/node-xlsx-stream/blob/master/LICENSE"
+      "url": "https://github.com/ecmel/node-xlsx-stream/blob/master/LICENSE"
     }
   ],
   "main": "lib/index.js",
