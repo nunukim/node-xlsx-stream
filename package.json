@@ -2,6 +2,7 @@
   "name": "node-xlsx-stream",
   "description": "Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.",
   "version": "0.1.7",
+  "license": "Apache",
   "homepage": "https://github.com/ecmel/node-xlsx-stream",
   "author": {
     "name": "Ryota Suzuki",
