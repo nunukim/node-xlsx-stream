@@ -1,49 +1,57 @@
 {
-  "name": "xlsx-stream",
+  "name": "node-xlsx-stream",
   "description": "Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.",
-  "version": "0.1.2",
-  "homepage": "https://github.com/nunukim/node-xlsx-stream",
+  "version": "0.1.8",
+  "license": "MIT",
+  "homepage": "https://github.com/ecmel/node-xlsx-stream",
   "author": {
     "name": "Ryota Suzuki",
     "email": "suzuki@galileoscope.com",
     "url": "http://galileoscope.com/"
   },
+  "maintainers": [
+    {
+      "name": "Ecmel Ercan",
+      "email": "ecmel.ercan@gmail.com",
+      "url": "https://github.com/ecmel"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/nunukim/node-xlsx-stream.git"
+    "url": "git://github.com/ecmel/node-xlsx-stream.git"
   },
   "bugs": {
-    "url": "https://github.com/nunukim/node-xlsx-stream/issues"
+    "url": "https://github.com/ecmel/node-xlsx-stream/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/nunukim/node-xlsx-stream/blob/master/LICENSE"
+      "url": "https://github.com/ecmel/node-xlsx-stream/blob/master/LICENSE"
     }
   ],
   "main": "lib/index.js",
   "engines": {
-    "node": "~ 0.8.0"
+    "node": "~0.8.0"
   },
   "scripts": {},
   "devDependencies": {
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-release": "~0.6.0",
-    "grunt-vows-runner": "~0.6.0",
-    "grunt-mkdir": "~0.1.1",
-    "grunt": "~0.4.0",
-    "coffee-script": "~1.6.3",
-    "vows": "~0.7.0",
-    "excel-parser": "~0.2.1",
-    "concat-stream": "~1.2.1"
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-contrib-coffee": "^2.0.0",
+    "grunt-release": "^0.14.0",
+    "grunt-vows-runner": "^0.6.0",
+    "grunt-mkdir": "^1.0.0",
+    "grunt": "^1.0.3",
+    "coffee-script": "^1.12.7",
+    "vows": "^0.8.2",
+    "excel-parser": "^0.2.2",
+    "concat-stream": "^1.6.2"
   },
   "dependencies": {
-    "lodash": "~ 1.3.0",
-    "through": "~ 2.3.4",
-    "duplexer": "~ 0.1.1",
-    "archiver": "~0.4.10"
+    "lodash": "^4.17.10",
+    "through": "^2.3.8",
+    "duplexer": "^0.1.1",
+    "archiver": "^2.1.1"
   },
   "keywords": [
     "xlsx",

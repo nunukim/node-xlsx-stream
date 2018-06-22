@@ -5,7 +5,7 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
 
 * Installation
 
-        npm install xlsx-stream
+        npm install node-xlsx-stream
 
 * Features
 
@@ -14,7 +14,7 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
 * Usage
 
         # coffee-script
-        xlsx = require "xlsx-stream"
+        xlsx = require "node-xlsx-stream"
         fs = require "fs"
         
         x = xlsx()
@@ -46,7 +46,3 @@ Creates SpreadsheetML (.xlsx) files in sequence with streaming interface.
         sheet2.end()
 
         x.finalize()
-
-* Help Wanted
-
-        Comments
